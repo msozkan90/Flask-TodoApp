@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <div class="container mt-5">
+        <h2>HELLO</h2>
+
+        <form action="/articles/add/" method = "post">
+          
+            <div class="form-group">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <label for="formGroupExampleInput">Author</label>
+                    <input type="text" class="form-control" name = "author" id="formGroupExampleInput" ><br>
+                    <label for="formGroupExampleInput">Title </label>
+                    <input type="text" class="form-control" name = "title" id="formGroupExampleInput" ><br>
+                    <!-- <label for="formGroupExampleInput">Content </label>
+                    <input type="text" class="form-control" name = "content1" id="formGroupExampleInput" ><br> -->
+                    <label for="formGroupExampleInput"> Content</label>
+                    <textarea class="form-control" name="content" id="formGroupExampleInput" cols="30" rows="10"></textarea>
+
+
+
+                    <button type = "submit" class="btn btn-danger mt-2">Ekle</button>
+            </div>
+            <hr>
+
+
+        </form>
+
+
+
+
+
+        {% if articles == [] %}
+        <div class="alert alert-warning" role="alert">
+                Herhangi bir makale bulunmuyor...
+        </div>
+        {% else %}
+
+        {% for article in articles  %}
+        <p>{{article.author}}</p>
+        <p>{{article.title}}</p>
+        <p>{{article.content}}</p>
+        <p>{{article.created_date}}</p>
+        {% endfor %}
+
+        {% endif %}
+    </div>
+
+{% endblock %}

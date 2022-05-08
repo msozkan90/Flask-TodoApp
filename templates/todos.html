@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <div style = "margin-top: 100px;" class = "container" >
+        <h3>Todo List</h3>
+        <hr>
+
+        <form action="/add" method = "post">
+            <div class="form-group">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <label for="formGroupExampleInput">Todo Title</label>
+              <input type="text" class="form-control" name = "title" id="formGroupExampleInput" placeholder="Enter Todo..." required><br>
+                    <button type = "submit" class="btn btn-danger">Add</button>
+            </div>
+            <hr>
+
+
+        </form>
+        {% if todos != [] %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Todo Title</th>
+              <th scope="col">Situation</th>
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for todo in todos %}
+            <tr>
+                  <th scope="row">{{todo.id}}</th>
+                  <td>{{todo.owner.name}}</td>
+                  <td>{{todo.title}}</td>
+                  {% if todo.complete == False %}
+                  <td>Not Completed</td>
+                  {% else %}
+                  <td>Completed</td>
+                  {% endif %}
+                  
+                  <td><a href="/complete/{{todo.id}}" class ="btn btn-danger">Complete</a></td>
+                  <td><a href="/delete/{{todo.id}}" class ="btn btn-danger">Delete</a></td>
+
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+
+        <div class="alert alert-warning" role="alert">
+          There is no any data
+  </div>
+  {% endif %}
+    
+        
+    
+    {% endblock %} 
